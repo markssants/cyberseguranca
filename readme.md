@@ -2,15 +2,14 @@
 
 ## 1. Visão Geral do Projeto
 
-Este projeto documenta a configuração de um ambiente de teste isolado e a análise de vulnerabilidades de **ataque de força bruta** em serviços comuns (FTP, SMB e aplicações Web) utilizando o Kali Linux e a ferramenta Medusa.
+Este desafio documenta um teste isolado a análise de vulnerabilidades de **ataque de força bruta**utilizando o Kali Linux e a ferramenta Medusa.
 
 O objetivo principal é exercitar medidas de **segurança defensiva**, entendendo como os ataques são realizados para implementar estratégias de **prevenção e mitigação**.
 
 **Tecnologias Utilizadas:**
 * **Ataque/Teste:** Kali Linux, Medusa (Ferramenta de Brute Force)
-* **Alvo:** Metasploitable 2 (Servidor vulnerável com FTP, SMB, DVWA)
-* **Virtualização:** Oracle VirtualBox
-* **Rede:** Configuração **Host-Only** (Rede Interna Isolada)
+* **Alvo:** Metasploitable 2
+* **Virtualização:** VMWare - MacOs Tahoe
 
 ---
 
@@ -18,15 +17,11 @@ O objetivo principal é exercitar medidas de **segurança defensiva**, entendend
 
 O ambiente foi configurado com duas Máquinas Virtuais (VMs) isoladas, conectadas por uma rede Host-Only, garantindo que o tráfego simulado fique contido.
 
-| VM | Sistema Operacional | Função | Endereço IP (Exemplo) |
-| :--- | :--- | :--- | :--- |
-| **Kali Linux** | Debian (Rolling) | Máquina de Teste (Attacker) | 192.168.56.101 |
-| **Metasploitable 2** | Linux | Máquina Alvo (Target) | 192.168.56.102 |
+| :--- | :--- | :--- |
+| **Kali Linux** 192.168.56.101 |
+| **Metasploitable 2** 192.168.56.102 |
 
 ****
-
-**Configuração de Rede:**
-As VMs utilizaram a configuração **Rede Interna (Host-Only)** no VirtualBox, garantindo que o tráfego simulado de ataque não interfira ou vaze para redes externas.
 
 ---
 
@@ -34,8 +29,7 @@ As VMs utilizaram a configuração **Rede Interna (Host-Only)** no VirtualBox, g
 
 Os testes foram realizados utilizando a ferramenta **Medusa** para validar a exposição de serviços a ataques de dicionário e *password spraying*.
 
-| Serviço Alvo | Ferramenta Utilizada | Análise de Vulnerabilidade | Mitigação Abordada |
-| :--- | :--- | :--- | :--- |
+| :--- | :--- | :--- |
 | **A. FTP (Porta 21)** | Medusa (`-M ftp`) | **Vulnerabilidade:** Permite tentativas de login ilimitadas sem bloqueio de IP ou atraso. | Bloqueio de IP após `N` falhas, Desativação de FTP Anônimo. |
 | **B. Formulário Web (DVWA)** | Medusa/Script Customizado | **Vulnerabilidade:** Falha na implementação de **Rate Limiting** e ausência de **CAPTCHA** no login. | Implementação de CAPTCHA e 2FA. |
 | **C. SMB (Password Spraying)** | Medusa (`-M smb`) | **Vulnerabilidade:** Falha ao forçar a complexidade das senhas, permitindo que uma senha simples funcione para muitos usuários. | Monitoramento de múltiplos bloqueios, Política de Senha Forte. |
@@ -45,17 +39,12 @@ Os testes foram realizados utilizando a ferramenta **Medusa** para validar a exp
 ## 4. Documentação dos Testes e Artefatos
 
 * **Comandos Utilizados (Estrutura Genérica):**
-    A sintaxe básica para os testes de brute force seguiu o formato:
     ```bash
-    # Exemplo: Medusa para teste em serviços de rede
-    medusa -h [IP_ALVO] -u [ARQUIVO_USUARIOS] -P [ARQUIVO_SENHAS] -M [MODULO] -n [PORTA]
+    medusa -h [192.168.56.102] -u [usuarios.txt] -P [senhas.txt] -M [ftp] -n [21]
     ```
 * **Wordlists:** (Arquivos localizados na pasta `\wordlists`)
-    * `wordlists/usernames.txt`: Lista simples de usuários comuns do Metasploitable 2 (ex: `msfadmin`, `user`, `postgres`).
-    * `wordlists/passwords_small.txt`: Lista de senhas extremamente fracas para validação inicial (ex: `password`, `123456`, `test`).
-* **Capturas de Tela:** (Localizadas na pasta `/images`)
-    * `images/01_network_config.png`: Captura da configuração de rede Host-Only.
-    * `images/02_login_attempt_log.png`: Exemplo de log do servidor Metasploitable 2 mostrando tentativas de login fracassadas.
+    * `wordlists/usuarios.txt`: Lista simples de usuários comuns do Metasploitable 2 (ex: `msfadmin`, `user`, `postgres`).
+    * `wordlists/senhas.txt`: Lista de senhas extremamente fracas para validação inicial (ex: `password`, `123456`,msfadmin, `test`).
 
 ---
 
