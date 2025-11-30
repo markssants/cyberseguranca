@@ -17,9 +17,9 @@ O objetivo principal é exercitar medidas de **segurança defensiva**, entendend
 
 O ambiente foi configurado com duas Máquinas Virtuais (VMs) isoladas, conectadas por uma rede Host-Only, garantindo que o tráfego simulado fique contido.
 
-| :--- | :--- | :--- |
-| **Kali Linux** 192.168.56.101 |
-| **Metasploitable 2** 192.168.56.102 |
+| Kali Línux | Metasploitable 2 |
+| :--- | :--- |
+| 192.168.56.101 | 192.168.56.102 |
 
 ****
 
@@ -29,7 +29,8 @@ O ambiente foi configurado com duas Máquinas Virtuais (VMs) isoladas, conectada
 
 Os testes foram realizados utilizando a ferramenta **Medusa** para validar a exposição de serviços a ataques de dicionário e *password spraying*.
 
-| :--- | :--- | :--- |
+| Serviço Alvo | Ferramenta Utilizada | Análise de Vulnerabilidade | Mitigação Abordada |
+| :--- | :--- | :--- | :--- |
 | **A. FTP (Porta 21)** | Medusa (`-M ftp`) | **Vulnerabilidade:** Permite tentativas de login ilimitadas sem bloqueio de IP ou atraso. | Bloqueio de IP após `N` falhas, Desativação de FTP Anônimo. |
 | **B. Formulário Web (DVWA)** | Medusa/Script Customizado | **Vulnerabilidade:** Falha na implementação de **Rate Limiting** e ausência de **CAPTCHA** no login. | Implementação de CAPTCHA e 2FA. |
 | **C. SMB (Password Spraying)** | Medusa (`-M smb`) | **Vulnerabilidade:** Falha ao forçar a complexidade das senhas, permitindo que uma senha simples funcione para muitos usuários. | Monitoramento de múltiplos bloqueios, Política de Senha Forte. |
