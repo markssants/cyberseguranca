@@ -72,29 +72,10 @@ except EOFError:
     print("Acesso Normal")
 ```
 
-🧠 Explicação da Lógica
-Pré-processamento da Entrada:
+# Sistema de Bloqueio por Falhas Consecutivas
 
-A string de entrada ("sucesso, falha, falha") é transformada em uma lista de strings (['sucesso', 'falha', 'falha']) para facilitar a iteração.
+## 🧠 Explicação da Lógica de Pré-processamento da Entrada
 
-Variáveis de Controle:
-
-falhas_consecutivas: Contador que armazena quantas falhas ocorreram na sequência atual. É resetado para 0 a cada sucesso.
-
-bloqueada: Uma flag booleana (True/False) que indica se a condição de bloqueio foi atingida.
-
-Iteração e Condicionais:
-
-Para cada "falha" encontrada, o contador falhas_consecutivas é aumentado em 1.
-
-Se, após o incremento, o contador for >= 3, o programa imprime "Conta Bloqueada", define a flag bloqueada como True e sai do loop imediatamente (break).
-
-Para qualquer outro resultado (ou seja, "sucesso"), o contador falhas_consecutivas é zerado.
-
-Saída Final:
-
-Após o loop, o programa verifica o estado da flag bloqueada.
-
-Se bloqueada for False (o loop terminou sem atingir 3 falhas seguidas), a saída é "Acesso Normal".
-
-🧪 Exemplos de TesteEntradaFalhas Consecutivas (Max)Saída Esperadasucesso, falha, falha, falha3 (atingido)Conta Bloqueadafalha, falha, sucesso, falha2Acesso Normalfalha, falha, falha, sucesso3 (atingido)Conta Bloqueadasucesso, sucesso, falha, sucesso1Acesso Normalfalha, falha, falha, falha, falha5Conta Bloqueada
+- A string de entrada (ex: `"sucesso, falha, falha"`) é transformada em uma lista de strings:
+  ```python
+  ['sucesso', 'falha', 'falha']
