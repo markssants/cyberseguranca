@@ -51,9 +51,9 @@ if __name__ == "__main__":
     comando_usuario = input("Digite o comando a ser analisado: ")
     resultado = verificar_comando(comando_usuario)
     print(f"\nResultado: {resultado}")
-    ```
-
-# 🧪 Exemplos de Teste
+    
+    
+## 🧪 Exemplos de Teste
 
 | Entrada                          | Resultado            | Motivo                              |
 |----------------------------------|----------------------|-------------------------------------|
