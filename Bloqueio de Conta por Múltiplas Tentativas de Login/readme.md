@@ -70,6 +70,7 @@ try:
 except EOFError:
     # Trata o caso de entrada vazia ou fim de arquivo
     print("Acesso Normal")
+```
 
 🧠 Explicação da Lógica
 Pré-processamento da Entrada:
