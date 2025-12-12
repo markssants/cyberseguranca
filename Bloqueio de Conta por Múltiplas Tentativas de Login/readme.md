@@ -72,10 +72,50 @@ except EOFError:
     print("Acesso Normal")
 ```
 
-# Sistema de Bloqueio por Falhas Consecutivas
+# 🧠 Explicação da Lógica
 
-## 🧠 Explicação da Lógica de Pré-processamento da Entrada
+## Pré-processamento da Entrada
+A string de entrada (`"sucesso, falha, falha"`) é transformada em uma lista de strings: ['sucesso', 'falha', 'falha']
 
-- A string de entrada (ex: `"sucesso, falha, falha"`) é transformada em uma lista de strings:
-  ```python
-  ['sucesso', 'falha', 'falha']
+
+Isso facilita a iteração item a item.
+
+---
+
+## Variáveis de Controle
+
+- **falhas_consecutivas**: Contador que registra quantas falhas ocorreram de forma consecutiva.  
+  É resetado para `0` sempre que ocorre um "sucesso".
+
+- **bloqueada**: Flag booleana (`True`/`False`) usada para indicar se o limite de falhas foi atingido.
+
+---
+
+## Iteração e Condicionais
+
+- Para cada `"falha"` encontrada, o contador `falhas_consecutivas` é incrementado em `1`.
+- Se, após o incremento, o contador for **maior ou igual a 3**, o programa:
+  - Imprime: **"Conta Bloqueada"**
+  - Define `bloqueada = True`
+  - Encerra o loop imediatamente com `break`
+- Para qualquer `"sucesso"`, o contador é zerado para `0`.
+
+---
+
+## Saída Final
+
+Após o loop, o programa verifica o valor da flag `bloqueada`:
+
+- Se **bloqueada == False**, significa que **não** ocorreram 3 falhas consecutivas → saída: **"Acesso Normal"**
+
+---
+
+# 🧪 Exemplos de Teste
+
+| Entrada                                   | Falhas Consecutivas (Max) | Saída Esperada     |
+|-------------------------------------------|----------------------------|---------------------|
+| sucesso, falha, falha, falha              | 3 (atingido)               | Conta Bloqueada     |
+| falha, falha, sucesso, falha              | 2                          | Acesso Normal       |
+| falha, falha, falha, sucesso              | 3 (atingido)               | Conta Bloqueada     |
+| sucesso, sucesso, falha, sucesso          | 1                          | Acesso Normal       |
+| falha, falha, falha, falha, falha         | 5                          | Conta Bloqueada     |
